@@ -4,7 +4,6 @@ using RestApiDemo.Serialization;
 namespace RestApiDemo.Types
 {
     [StrongValueType(typeof(int))]
-    [JsonConverter(typeof(StrongValueTypeJsonConverter))]
     public struct TestId : System.IEquatable<TestId>, System.IComparable<TestId>, System.IComparable
     { 
         public TestId(int value)

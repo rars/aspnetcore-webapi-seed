@@ -39,15 +39,7 @@ namespace RestApiDemo.Serialization
             object existingValue,
             JsonSerializer serializer)
         {
-            Type strongType;
-            if (objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Nullable<>))
-            {
-                strongType = Nullable.GetUnderlyingType(objectType);
-            }
-            else
-            {
-                strongType = objectType;
-            }
+            Type strongType = RemoveNullableWrapperIfPresent(objectType);
 
             StrongValueTypeAttribute valueTypeAttribute = GetStrongValueTypeAttribute(strongType);
             if (valueTypeAttribute.ValueType == typeof(int))
@@ -66,7 +58,18 @@ namespace RestApiDemo.Serialization
         public override bool CanConvert(
             Type objectType)
         {
-            return GetStrongValueTypeAttribute(objectType) != null;
+            Type potentialStrongType = RemoveNullableWrapperIfPresent(objectType);
+            return GetStrongValueTypeAttribute(potentialStrongType) != null;
+        }
+
+        private static Type RemoveNullableWrapperIfPresent(
+            Type objectType)
+        {
+            if (objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                return Nullable.GetUnderlyingType(objectType);
+            }
+            return objectType;
         }
 
         private static object CastToNullableStrongType<T>(
