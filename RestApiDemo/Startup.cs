@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿// <copyright file="Startup.cs" company="Richard Russell">
+// Copyright (c) Richard Russell. All rights reserved.
+// Licensed under the MIT license.
+// </copyright>
+
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
 using RestApiDemo.Serialization;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace RestApiDemo
 {

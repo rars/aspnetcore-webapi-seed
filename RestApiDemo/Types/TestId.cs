@@ -1,11 +1,56 @@
-﻿using Newtonsoft.Json;
+﻿// <copyright file="TestId.cs" company="Richard Russell">
+// Copyright (c) Richard Russell. All rights reserved.
+// Licensed under the MIT license.
+// </copyright>
+
+using Newtonsoft.Json;
 using RestApiDemo.Serialization;
 
 namespace RestApiDemo.Types
 {
     [StrongValueType(typeof(int))]
     public struct TestId : System.IEquatable<TestId>, System.IComparable<TestId>, System.IComparable
-    { 
+    {
+        public static explicit operator int(TestId value)
+        {
+            return value._value;
+        }
+
+        public static explicit operator TestId(int value)
+        {
+            return new TestId(value);
+        }
+
+        public static bool operator ==(TestId lhs, TestId rhs)
+        {
+            return lhs.Equals(rhs);
+        }
+
+        public static bool operator !=(TestId lhs, TestId rhs)
+        {
+            return !(lhs == rhs);
+        }
+
+        public static bool operator <(TestId lhs, TestId rhs)
+        {
+            return lhs.CompareTo(rhs) < 0;
+        }
+
+        public static bool operator >(TestId lhs, TestId rhs)
+        {
+            return lhs.CompareTo(rhs) > 0;
+        }
+
+        public static bool operator <=(TestId lhs, TestId rhs)
+        {
+            return !(lhs > rhs);
+        }
+
+        public static bool operator >=(TestId lhs, TestId rhs)
+        {
+            return !(lhs < rhs);
+        }
+
         public TestId(int value)
         {
             _value = value;
@@ -49,46 +94,6 @@ namespace RestApiDemo.Types
             }
 
             throw new System.ArgumentException("Incorrect type.", nameof(obj));
-        }
-
-        public static explicit operator int(TestId value)
-        {
-            return value._value;
-        }
-
-        public static explicit operator TestId(int value)
-        {
-            return new TestId(value);
-        }
-
-        public static bool operator ==(TestId lhs, TestId rhs)
-        {
-            return lhs.Equals(rhs);
-        }
-
-        public static bool operator !=(TestId lhs, TestId rhs)
-        {
-            return !(lhs == rhs);
-        }
-
-        public static bool operator <(TestId lhs, TestId rhs)
-        {
-            return lhs.CompareTo(rhs) < 0;
-        }
-
-        public static bool operator >(TestId lhs, TestId rhs)
-        {
-            return lhs.CompareTo(rhs) > 0;
-        }
-
-        public static bool operator <=(TestId lhs, TestId rhs)
-        {
-            return !(lhs > rhs);
-        }
-
-        public static bool operator >=(TestId lhs, TestId rhs)
-        {
-            return !(lhs < rhs);
         }
 
         [JsonProperty("value")]

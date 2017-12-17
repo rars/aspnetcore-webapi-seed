@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿// <copyright file="Program.cs" company="Richard Russell">
+// Copyright (c) Richard Russell. All rights reserved.
+// Licensed under the MIT license.
+// </copyright>
+
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace RestApiDemo
 {

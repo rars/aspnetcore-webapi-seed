@@ -1,4 +1,9 @@
-﻿using System;
+﻿// <copyright file="StrongValueTypeJsonConverter.cs" company="Richard Russell">
+// Copyright (c) Richard Russell. All rights reserved.
+// Licensed under the MIT license.
+// </copyright>
+
+using System;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
@@ -11,7 +16,7 @@ namespace RestApiDemo.Serialization
             JsonWriter writer,
             object value,
             JsonSerializer serializer)
-        {
+       {
             Type valueType = value.GetType();
             StrongValueTypeAttribute valueTypeAttribute = GetStrongValueTypeAttribute(value.GetType());
 
@@ -52,9 +57,10 @@ namespace RestApiDemo.Serialization
                 long? longValue = (long?)reader.Value;
                 return CastToNullableStrongType(strongType, longValue);
             }
+
             throw new NotImplementedException();
         }
-        
+
         public override bool CanConvert(
             Type objectType)
         {
@@ -69,12 +75,14 @@ namespace RestApiDemo.Serialization
             {
                 return Nullable.GetUnderlyingType(objectType);
             }
+
             return objectType;
         }
 
         private static object CastToNullableStrongType<T>(
             Type strongType,
-            T? primitiveValue) where T : struct
+            T? primitiveValue)
+                where T : struct
         {
             if (primitiveValue.HasValue)
             {
