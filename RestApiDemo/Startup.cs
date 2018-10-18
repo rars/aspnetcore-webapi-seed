@@ -3,12 +3,17 @@
 // Licensed under the MIT license.
 // </copyright>
 
+using System;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
+using RestApiDemo.DI;
 using RestApiDemo.Serialization;
+using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace RestApiDemo
@@ -23,7 +28,7 @@ namespace RestApiDemo
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
                 .AddMvc()
@@ -37,6 +42,12 @@ namespace RestApiDemo
             {
                 c.SwaggerDoc("v1", new Info { Title = "Demo API", Version = "v1" });
             });
+
+            // Setup Autofac dependency injection
+            var builder = new ContainerBuilder();
+            builder.RegisterModule(new RestApiDemoAutofacModule());
+            builder.Populate(services);
+            return new AutofacServiceProvider(builder.Build());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
