@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 using RestApiDemo.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -29,6 +30,7 @@ namespace RestApiDemo
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.Converters.Add(new StrongValueTypeJsonConverter());
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
 
             services.AddSwaggerGen(c =>
